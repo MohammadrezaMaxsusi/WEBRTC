@@ -5,7 +5,7 @@ const server = http.createServer(app)
 const io = require('socket.io')(server)
 const PORT = process.env.PORT || 3000;
 
-
+const QRCode = require('qrcode')
 app.use(express.static('Utilities'))
 app.get('/' , (req , res)=>{
     res.sendFile(__dirname + '/Utilities/index.html')
