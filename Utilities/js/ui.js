@@ -1,5 +1,5 @@
-import { callType } from "./constants";
-import  * as constants from './constants'
+
+import  * as constants from './constants.js'
 
 export const updatePersonalCode = (personalCode)=>{
     const personalCodeText = document.getElementById('personal_code_paragraph');
