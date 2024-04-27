@@ -43,3 +43,21 @@ export const removeCallDialog = ()=>{
     const dialogHTML = document.getElementById('dialog')
     dialogHTML.querySelectorAll('*').forEach((dialogHTML)=> dialogHTML.remove())
 }
+
+
+export const showAnswerStatus = (preOfferAnswer)=>{
+    let messageBox = null
+    if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED)
+        messageBox = elements.callAnswerStatus('تماس رد شده' , 'شما برای طرف تماس مهم نبوده اید ')
+    if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE)
+        messageBox = elements.callAnswerStatus(' مشکل در برقراری ارتباط ' , 'مخاطب  در دسترس نمیباشد')
+    if (preOfferAnswer === constants.preOfferAnswer.COLEE_NOT_FOUND)
+        messageBox = elements.callAnswerStatus('یافت نشد' , 'شناسه مورد نطر یافت نشد ')
+    const dialogHTML = document.getElementById('dialog')
+    dialogHTML.appendChild(messageBox)
+    console.log(dialogHTML)
+
+    setTimeout(()=>{
+        removeCallDialog()
+    } , 6000)
+}

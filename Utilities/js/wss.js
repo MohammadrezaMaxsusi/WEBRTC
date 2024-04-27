@@ -14,6 +14,8 @@ export const registerSocketEvent = (socket) =>{
     })
     socket.on('pre-offer-answer' , (data)=>{
         webRTCHandler.handlePreOfferAnswer(data)
+        // ui.removeCallDialog()
+
     })
 }
 
@@ -23,5 +25,6 @@ export const sendPreOffer = (data) =>{
 
 export const sendPreOfferAnswer = (data)=>{
     socketIo.emit('pre-offer-answer' , data)
+
 }
 

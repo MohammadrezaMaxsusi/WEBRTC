@@ -52,17 +52,23 @@ const sendPreOfferAnswer = (preOfferAnswer)=>{
 export const handlePreOfferAnswer = (data) =>{
     const {preOfferAnswer}  = data
     ui.removeCallDialog()
-    
     if (preOfferAnswer === constants.preOfferAnswer.COLEE_NOT_FOUND){
-        //
+        ui.showAnswerStatus(preOfferAnswer)
     }
     else if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE){
-        //
+        ui.showAnswerStatus(preOfferAnswer)
+        
     }
     else if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED){
-        //
+        ui.showAnswerStatus(preOfferAnswer)
+        
     }
     else if (preOfferAnswer === constants.preOfferAnswer.CALL_ACCEPTED){
-        //
+        ui.showCallElements(connectedUserDetails.callType)
     }
 }
+
+
+//ui helper functions 
+
+

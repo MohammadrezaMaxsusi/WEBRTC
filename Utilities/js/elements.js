@@ -87,3 +87,21 @@ export const callingDialogBox = (callingDialogReject)=>{
     dialogContent.appendChild(dialog_button_container)
     return dialog
 }
+
+
+export const callAnswerStatus = (title ,  text)=>{
+    const dialog = document.createElement("div")
+    dialog.classList.add('dialog_wrapper')
+    const dialogContent = document.createElement("div")
+    dialog.appendChild(dialogContent)
+    dialogContent.classList.add('dialog_content')
+    const title_ = document.createElement('p')
+    title_.classList.add('dialog_title')
+    title_.innerHTML = title
+    const text_ = document.createElement('p')
+    text_.classList.add('dialog_title')
+    text_.innerHTML = text
+    dialogContent.appendChild(title_)
+    dialogContent.appendChild(text_)
+    return dialog
+}

@@ -31,13 +31,14 @@ io.on('connection' , (socket) => {
 
     })
     socket.on('pre-offer-answer' , (data)=>{
-        const {collerSocketId , preOfferAnswer} = data
+        const {callerSocketId } = data
         const connectedPeer = connectedPeers.find((peerId) => {
-            return peerId === collerSocketId})
+            return peerId === callerSocketId})
         if (connectedPeer) {
-
-            io.to(calleePersonalCode).emit('pre-offer-answer', data)
+            console.log("awdawdglg")
+            io.to(callerSocketId).emit('pre-offer-answer', data)
         }
+        
     })
     socket.on('disconnect' , ()=>{
         const newConnection = connectedPeers.filter((peer)=>{
