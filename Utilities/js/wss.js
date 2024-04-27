@@ -17,3 +17,7 @@ export const registerSocketEvent = (socket) =>{
 export const sendPreOffer = (data) =>{
     socketIo.emit('pre-offer' , data)
 }
+
+export const sendPreOfferAnswer = (data)=>{
+    socketIo.emit('pre-offer-answer' , data)
+}

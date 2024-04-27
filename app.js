@@ -23,14 +23,17 @@ io.on('connection' , (socket) => {
             return peerId === calleePersonalCode})
         if (connectedPeer) {
             const data = {
-                callerId : socket.id,
+                collerSocketId : socket.id,
                 callType 
             }
             io.to(calleePersonalCode).emit('pre-offer', data)
         }
 
     })
-
+    socket.on('pre-offer-answer' , (data)=>{
+        console.log("umad")
+        console.log(data)
+    })
     socket.on('disconnect' , ()=>{
         const newConnection = connectedPeers.filter((peer)=>{
             return peer !== socket.id
