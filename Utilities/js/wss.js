@@ -12,6 +12,9 @@ export const registerSocketEvent = (socket) =>{
     socket.on('pre-offer' , (data)=>{
         webRTCHandler.handlePreOffer(data)
     })
+    socket.on('pre-offer-answer' , (data)=>{
+        webRTCHandler.handlePreOfferAnswer(data)
+    })
 }
 
 export const sendPreOffer = (data) =>{
@@ -21,3 +24,4 @@ export const sendPreOffer = (data) =>{
 export const sendPreOfferAnswer = (data)=>{
     socketIo.emit('pre-offer-answer' , data)
 }
+

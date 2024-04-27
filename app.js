@@ -31,8 +31,13 @@ io.on('connection' , (socket) => {
 
     })
     socket.on('pre-offer-answer' , (data)=>{
-        console.log("umad")
-        console.log(data)
+        const {collerSocketId , preOfferAnswer} = data
+        const connectedPeer = connectedPeers.find((peerId) => {
+            return peerId === collerSocketId})
+        if (connectedPeer) {
+
+            io.to(calleePersonalCode).emit('pre-offer-answer', data)
+        }
     })
     socket.on('disconnect' , ()=>{
         const newConnection = connectedPeers.filter((peer)=>{

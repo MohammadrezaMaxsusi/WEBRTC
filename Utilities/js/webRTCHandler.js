@@ -45,5 +45,24 @@ const sendPreOfferAnswer = (preOfferAnswer)=>{
         callerSocketId : connectedUserDetails.socketId,
         preOfferAnswer
     }
+    ui.removeCallDialog()
     wss.sendPreOfferAnswer(data)
+}
+
+export const handlePreOfferAnswer = (data) =>{
+    const {preOfferAnswer}  = data
+    ui.removeCallDialog()
+    
+    if (preOfferAnswer === constants.preOfferAnswer.COLEE_NOT_FOUND){
+        //
+    }
+    else if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE){
+        //
+    }
+    else if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED){
+        //
+    }
+    else if (preOfferAnswer === constants.preOfferAnswer.CALL_ACCEPTED){
+        //
+    }
 }
