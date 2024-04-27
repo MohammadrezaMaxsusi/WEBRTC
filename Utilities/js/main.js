@@ -2,6 +2,7 @@ import * as store from './store.js'
 import * as wss from './wss.js'
 import * as webRTChandler from './webRTCHandler.js'
 import *  as constants from './constants.js'
+import { getIncomingCall } from './elements.js'
 const socket = io('/')
 wss.registerSocketEvent(socket)
 
@@ -33,3 +34,4 @@ personalCodeVideoButton.addEventListener('click' , ()=>{
     const callType = constants.callType.VIDEO_PERSONAL_CODE
     webRTChandler.sendPreOffer(callType , calleePersonalCode)
 })
+
