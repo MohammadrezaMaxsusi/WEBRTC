@@ -20,7 +20,10 @@ export const updateLocalVideo = (stream)=>{
         localVideo.play()
     }) 
 }
-
+export const updateRemoteVideo = (stream)=>{
+    const remoteVideo = document.getElementById('remote_video')
+    remoteVideo.srcObject = stream
+}
 export const showIncomingCall =(callType, acceptCallHandler , rejectCallHandler)=>{
 
     const callTypeInfo = constants.callType.CHAT_PERSONAL_CODE  === callType ? "Chat" : "Video"
@@ -67,6 +70,7 @@ export const showAnswerStatus = (preOfferAnswer)=>{
         removeCallDialog()
     } , 4000)
 }
+
 
 //ui helper functions 
 

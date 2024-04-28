@@ -35,10 +35,22 @@ io.on('connection' , (socket) => {
         const connectedPeer = connectedPeers.find((peerId) => {
             return peerId === callerSocketId})
         if (connectedPeer) {
-            console.log("awdawdglg")
             io.to(callerSocketId).emit('pre-offer-answer', data)
         }
         
+    })
+    socket.on('webRTC-signaling' , (data)=>{
+        console.log(data)
+        const {connectedUserSocketID}  = data
+        const connectedPeer = connectedPeers.find((peerId) => {
+            return peerId === connectedUserSocketID})
+        if (connectedPeer) {
+            const data = {
+                collerSocketId : socket.id,
+                // callType 
+            }
+            io.to(connectedUserSocketID).emit('web-RTC-signaling', data)
+        }
     })
     socket.on('disconnect' , ()=>{
         const newConnection = connectedPeers.filter((peer)=>{

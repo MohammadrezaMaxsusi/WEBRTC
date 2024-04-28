@@ -4,7 +4,7 @@ import * as wss from './wss.js'
 import  * as constants from './constants.js'
 import * as store from './store.js'
 let connectedUserDetails = null
-
+let peerConnection;
 
 const defaultContrains = {
     audio :true,
@@ -18,7 +18,7 @@ const configuration = {
     ]
 }
 const createPeerConnection  = ()=>{
-    let peerConnection = new RTCPeerConnection(configuration)
+    peerConnection = new RTCPeerConnection(configuration)
     peerConnection.onicecandidate =(event)=>{
         console.log("test for getting information ");
         if(event.candidate){
@@ -75,6 +75,7 @@ export const handlePreOffer =  (data)=>{
 }
 
 const acceptCallHandler = ()=>{
+    createPeerConnection();
     sendPreOfferAnswer(constants.preOfferAnswer.CALL_ACCEPTED);
     ui.showCallElements(connectedUserDetails.callType)
 }
@@ -110,11 +111,29 @@ export const handlePreOfferAnswer = (data) =>{
         
     }
     else if (preOfferAnswer === constants.preOfferAnswer.CALL_ACCEPTED){
-        ui.showCallElements(connectedUserDetails.callType)
+        ui.showCallElements(connectedUserDetails.callType);
+        createPeerConnection();
+        sendWerbRTCOffer();
     }
 }
 
 
+
+const sendWerbRTCOffer = async()=>{
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
+    wss.sendDataUsingWebRTCSignaling({
+        connectedUserSocketID : connectedUserDetails.socketId,
+        type : constants.webRTCSignaling.OFFER,
+        offer : offer
+    })
+}
+
+
+export const handleWebRTCOffer = (data)=>{
+    console.log('offer came')
+    console.log(data)
+}
 //ui helper functions 
 
 

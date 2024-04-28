@@ -12,3 +12,9 @@ export const preOfferAnswer = {
     CALL_REJECTED : 'تماس رد شده',
     CALL_UNAVAILABLE : ' دسترسی امکان پذیر نیست'
 }
+
+export const webRTCSignaling ={
+    OFFER : 'OFFER',
+    ANSWER : 'ANSWER',
+    ICE_CANDIDATE : 'ICECANDIDATE'
+}
