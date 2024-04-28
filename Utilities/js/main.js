@@ -10,7 +10,7 @@ wss.registerSocketEvent(socket)
 
 //copy to clipboard
 
-
+webRTChandler.getLocalPreview()
 const personalCodeCopyButton = document.getElementById('personal_code_copy_button')
 personalCodeCopyButton.addEventListener('click' , ()=>{
     const personalCode = store.getSatet().socketId;

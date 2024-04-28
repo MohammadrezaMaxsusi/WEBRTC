@@ -13,7 +13,13 @@ export const updatePersonalCode = (personalCode)=>{
     // })
 }
 
-
+export const updateLocalVideo = (stream)=>{
+    const localVideo = document.getElementById('local_video')
+    localVideo.srcObject = stream
+    localVideo.addEventListener('loadedmetadata' , ()=>{
+        localVideo.play()
+    }) 
+}
 
 export const showIncomingCall =(callType, acceptCallHandler , rejectCallHandler)=>{
 
@@ -59,5 +65,64 @@ export const showAnswerStatus = (preOfferAnswer)=>{
 
     setTimeout(()=>{
         removeCallDialog()
-    } , 6000)
+    } , 4000)
+}
+
+//ui helper functions 
+
+export const showCallElements  = (callType) =>{
+    if (callType === constants.callType.CHAT_PERSONAL_CODE){
+        showChatCallElements()
+    }
+    if (callType === constants.callType.VIDEO_PERSONAL_CODE){
+        showVideoCallElements()
+    }
+}
+
+const enableDashboard = ()=>{
+    const dashBoardBlocker = document.getElementById('dashboard_blur')
+    if(!dashBoardBlocker.classList.contains('display_none')){
+        dashBoardBlocker.classList.add('display_none')
+    }
+
+}
+
+const desableDashboard = ()=>{
+    const dashBoardBlocker = document.getElementById('dashboard_blur')
+    if(dashBoardBlocker.classList.contains('display_none')){
+        dashBoardBlocker.classList.remove('display_none')
+    }
+}
+
+const showElement = (element)=>{
+    const dashBoardBlocker = document.getElementById('dashboard_blur')
+    const elementHtml = document.getElementById(element)
+    elementHtml.classList.remove('display_none')
+    if(dashBoardBlocker.classList.contains('display_none')){
+        elementHtml.classList.remove('desplay_none')
+    }
+}
+
+
+const hideElement = (element)=>{
+    const elementHtml = document.getElementById(element)
+    elementHtml.classList.add('display_none')
+    const dashBoardBlocker = document.getElementById('dashboard_blur')
+    if(!dashBoardBlocker.classList.contains('display_none')){
+        elementHtml.classList.add('desplay_none')
+    }
+}
+
+const showChatCallElements = ()=>{
+    showElement('finish_chat_button_container')
+    showElement('new_message')
+    desableDashboard()
+}
+const showVideoCallElements = ()=>{
+    showElement('call_buttons')
+    showElement('remote_video')
+    showElement('new_message')
+    hideElement('video_placeholder')
+    desableDashboard()
+
 }

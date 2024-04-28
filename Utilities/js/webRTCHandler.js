@@ -2,8 +2,53 @@
 import * as ui from './ui.js'
 import * as wss from './wss.js'
 import  * as constants from './constants.js'
-
+import * as store from './store.js'
 let connectedUserDetails = null
+
+
+const defaultContrains = {
+    audio :true,
+    video :true
+}
+const configuration = {
+    iceServers : [
+        {
+            urls : 'stun:stun.1.google.com:13902'
+        }
+    ]
+}
+const createPeerConnection  = ()=>{
+    let peerConnection = new RTCPeerConnection(configuration)
+    peerConnection.onicecandidate =(event)=>{
+        console.log("test for getting information ");
+        if(event.candidate){
+            //send our ice candidate 
+            
+        }
+    }
+
+    const remoteStream = new MediaStream()
+    store.setRemoteStream(remoteStream);
+    ui.updateRemoteVideo(remoteStream);
+    peerConnection.ontrack = (event)=>{
+        remoteStream.addTrack(event.track)
+    }
+    //add stream to peer connection 
+
+    if( connectedUserDetails.callType === constants.callType.VIDEO_PERSONAL_CODE){
+        const localStream = store.getSatet().localStream;
+        for (const track of localStream.getTracks()){
+            peerConnection.addTrack(track , localStream)
+        }
+    }
+}
+export const getLocalPreview = ()=>{
+    navigator.mediaDevices.getUserMedia(defaultContrains)
+    .then((stream)=>{
+        ui.updateLocalVideo(stream)
+        store.setLocalStream(stream)
+    })
+}
 export const sendPreOffer = (callType , calleePersonalCode) =>{
     const data = {
         callType,
@@ -31,6 +76,7 @@ export const handlePreOffer =  (data)=>{
 
 const acceptCallHandler = ()=>{
     sendPreOfferAnswer(constants.preOfferAnswer.CALL_ACCEPTED);
+    ui.showCallElements(connectedUserDetails.callType)
 }
 const rejectCallHandler = ()=>{
     sendPreOfferAnswer(constants.preOfferAnswer.CALL_REJECTED);
