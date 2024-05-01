@@ -40,16 +40,16 @@ io.on('connection' , (socket) => {
         
     })
     socket.on('webRTC-signaling' , (data)=>{
-        console.log(data)
+        console.log(data.type)
         const {connectedUserSocketID}  = data
         const connectedPeer = connectedPeers.find((peerId) => {
             return peerId === connectedUserSocketID})
         if (connectedPeer) {
-            const data = {
-                collerSocketId : socket.id,
-                // callType 
-            }
-            io.to(connectedUserSocketID).emit('web-RTC-signaling', data)
+            // const data = {
+            //     collerSocketId : socket.id,
+            //     // callType 
+            // }
+            io.to(connectedUserSocketID).emit('webRTC-signaling', data)
         }
     })
     socket.on('disconnect' , ()=>{

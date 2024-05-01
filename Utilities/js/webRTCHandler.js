@@ -20,7 +20,7 @@ const configuration = {
 const createPeerConnection  = ()=>{
     peerConnection = new RTCPeerConnection(configuration)
     peerConnection.onicecandidate =(event)=>{
-        console.log("test for getting information ");
+        console.log("test for getting information from stun server ... ");
         if(event.candidate){
             //send our ice candidate 
             
@@ -113,26 +113,41 @@ export const handlePreOfferAnswer = (data) =>{
     else if (preOfferAnswer === constants.preOfferAnswer.CALL_ACCEPTED){
         ui.showCallElements(connectedUserDetails.callType);
         createPeerConnection();
-        sendWerbRTCOffer();
+        sendWebRTCOffer();
     }
 }
 
 
 
-const sendWerbRTCOffer = async()=>{
+const sendWebRTCOffer = async()=>{
     const offer = await peerConnection.createOffer();
     await peerConnection.setLocalDescription(offer);
+
     wss.sendDataUsingWebRTCSignaling({
         connectedUserSocketID : connectedUserDetails.socketId,
         type : constants.webRTCSignaling.OFFER,
         offer : offer
     })
+
 }
 
 
-export const handleWebRTCOffer = (data)=>{
-    console.log('offer came')
-    console.log(data)
+export const handleWebRTCOffer = async (data)=>{
+    await peerConnection.setRemoteDescription(data.offer)
+    const answer = await peerConnection.createAnswer();
+    await peerConnection.setLocalDescription(answer)
+    wss.sendDataUsingWebRTCSignaling(
+        {
+            connectedUserSocketID : connectedUserDetails.socketId,
+            type : constants.webRTCSignaling.ANSWER,
+            answer : answer
+        }
+    )
+}
+
+export const handleWebRTCAnswer = async (data)=>{
+    console.log("handeling answer .. ");
+    await peerConnection.setRemoteDescription(data.answer)
 }
 //ui helper functions 
 

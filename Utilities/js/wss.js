@@ -14,13 +14,20 @@ export const registerSocketEvent = (socket) =>{
         webRTCHandler.handlePreOffer(data)
     })
     socket.on('pre-offer-answer' , (data)=>{
+        console.log("socket on")
+
         webRTCHandler.handlePreOfferAnswer(data)
 
     })
     socket.on('webRTC-signaling' , (data)=>{
         switch (data.type){
             case constants.webRTCSignaling.OFFER :
+                console.log('mohammadreza')
                 webRTCHandler.handleWebRTCOffer(data)
+                break
+            case constants.webRTCSignaling.ANSWER :
+                console.log("maxsusi")
+                webRTCHandler.handleWebRTCAnswer(data)
                 break
             default :
                 return
