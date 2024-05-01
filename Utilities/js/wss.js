@@ -22,13 +22,13 @@ export const registerSocketEvent = (socket) =>{
     socket.on('webRTC-signaling' , (data)=>{
         switch (data.type){
             case constants.webRTCSignaling.OFFER :
-                console.log('mohammadreza')
                 webRTCHandler.handleWebRTCOffer(data)
                 break
             case constants.webRTCSignaling.ANSWER :
-                console.log("maxsusi")
                 webRTCHandler.handleWebRTCAnswer(data)
                 break
+            case constants.webRTCSignaling.ICE_CANDIDATE :
+                webRTCHandler.handleWebRTcandidate(data)
             default :
                 return
         }
