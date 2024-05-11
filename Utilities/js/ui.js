@@ -73,7 +73,15 @@ export const showAnswerStatus = (preOfferAnswer)=>{
 
 
 //ui helper functions 
-
+export  const appendMessage = (message , right = false)=>{
+    const messageContainer = document.getElementById('messages_container')
+    const messageElement = right ? elements.getRighttMessage(message) : elements.getLeftMessage(message)
+    messageContainer.appendChild(messageElement)
+}
+export const clearMessanger = ()=>{
+    const messageContainer = document.getElementById('messages_container')
+    //clear message here 
+}
 export const showCallElements  = (callType) =>{
     if (callType === constants.callType.CHAT_PERSONAL_CODE){
         showChatCallElements()

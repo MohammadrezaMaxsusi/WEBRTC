@@ -105,3 +105,22 @@ export const callAnswerStatus = (title ,  text)=>{
     dialogContent.appendChild(text_)
     return dialog
 }
+
+export const getLeftMessage  = (message) =>{
+    const messageContainer = document.createElement('div')
+    messageContainer.classList.add('message_left_container')
+    const messageParagh=document.createElement('p')
+    messageParagh.classList.add('message_left_paragraph')
+    messageParagh.innerHTML = message
+    messageContainer.appendChild(messageParagh)
+    return messageContainer
+}
+export const getRighttMessage  = (message) =>{
+    const messageContainer = document.createElement('div')
+    messageContainer.classList.add('message_right_container')
+    const messageParagh=document.createElement('p')
+    messageParagh.classList.add('message_right_paragraph')
+    messageParagh.innerHTML = message
+    messageContainer.appendChild(messageParagh)
+    return messageContainer
+}

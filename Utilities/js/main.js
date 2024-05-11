@@ -1,8 +1,10 @@
 import * as store from './store.js'
 import * as wss from './wss.js'
+import * as ui from './ui.js'
 import * as webRTChandler from './webRTCHandler.js'
 import *  as constants from './constants.js'
 import { getIncomingCall } from './elements.js'
+import { appendMessage } from './ui.js'
 const socket = io('/')
 wss.registerSocketEvent(socket)
 
@@ -42,6 +44,7 @@ newMessageInput.addEventListener('keydown' , (event)=>{
     const key = event.key
     if (key == 'Enter'){
         webRTChandler.sendMessageDataChannel(event.target.value)
+        ui.appendMessage(event.target.value , true)
         newMessageInput.value= ""
     }
 
@@ -49,5 +52,6 @@ newMessageInput.addEventListener('keydown' , (event)=>{
 const sendMessageButton = document.getElementById('send_message_button')
 sendMessageButton.addEventListener('click' , ()=>{
     webRTChandler.sendMessageDataChannel(newMessageInput.value)
+    ui.appendMessage(newMessageInput.value , true)
     newMessageInput.value = ""
 })
