@@ -1,3 +1,4 @@
+// import express from 'express';
 const express = require('express')
 const http = require('http');
 const app = express();
@@ -8,6 +9,7 @@ const QRcode = require('qrcode')
 
 app.use(express.static('Utilities'))
 app.get('/' , (req , res)=>{
+    console.log("test")
     res.sendFile(__dirname + '/Utilities/index.html')
 })
 let connectedPeers = []

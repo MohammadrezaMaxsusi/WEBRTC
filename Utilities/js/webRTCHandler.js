@@ -5,7 +5,7 @@ import  * as constants from './constants.js'
 import * as store from './store.js'
 let connectedUserDetails = null
 let peerConnection;
-
+let dataChannel ;
 const defaultContrains = {
     audio :true,
     video :true
@@ -19,6 +19,18 @@ const configuration = {
 }
 const createPeerConnection  = ()=>{
     peerConnection = new RTCPeerConnection(configuration)
+    dataChannel = peerConnection.createDataChannel('chat')
+    peerConnection.ondatachannel = (event)=>{
+        const dataChannel = event.channel
+        dataChannel.onopen = ()=>{
+            console.log("data channel created")
+        }
+        dataChannel.onmessage = (event)=>{
+            const message = JSON.parse(event.data)
+            console.log(message)
+        }
+    }
+
     peerConnection.onicecandidate =(event)=>{
         console.log("test for getting information from stun server ... ");
         if(event.candidate){
@@ -76,6 +88,12 @@ export const handlePreOffer =  (data)=>{
 
     ui.showIncomingCall(callType , acceptCallHandler  , rejectCallHandler);
 
+}
+
+
+export const sendMessageDataChannel = (message)=>{
+    const stringfieMessage = JSON.stringify(message)
+    dataChannel.send(stringfieMessage)
 }
 
 const acceptCallHandler = ()=>{
