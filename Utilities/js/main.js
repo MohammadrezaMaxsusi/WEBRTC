@@ -34,4 +34,20 @@ personalCodeVideoButton.addEventListener('click' , ()=>{
     const callType = constants.callType.VIDEO_PERSONAL_CODE
     webRTChandler.sendPreOffer(callType , calleePersonalCode)
 })
+ //messenger
 
+ const newMessageInput = document.getElementById('new_message_input')
+newMessageInput.addEventListener('keydown' , (event)=>{
+    console.log('test message');
+    const key = event.key
+    if (key == 'Enter'){
+        webRTChandler.sendMessageDataChannel(event.target.value)
+        newMessageInput.value= ""
+    }
+
+})
+const sendMessageButton = document.getElementById('send_message_button')
+sendMessageButton.addEventListener('click' , ()=>{
+    webRTChandler.sendMessageDataChannel(newMessageInput.value)
+    newMessageInput.value = ""
+})
