@@ -20,9 +20,12 @@ export const updateLocalVideo = (stream)=>{
         localVideo.play()
     }) 
 }
+
 export const updateRemoteVideo = (stream)=>{
     const remoteVideo = document.getElementById('remote_video')
     remoteVideo.srcObject = stream
+    const remoteVideo2 = document.getElementById('remote_video2')
+    remoteVideo2.srcObject = stream
 }
 export const showIncomingCall =(callType, acceptCallHandler , rejectCallHandler)=>{
 
@@ -91,7 +94,7 @@ export const showCallElements  = (callType) =>{
     }
 }
 
-const enableDashboard = ()=>{
+export const enableDashboard = ()=>{
     const dashBoardBlocker = document.getElementById('dashboard_blur')
     if(!dashBoardBlocker.classList.contains('display_none')){
         dashBoardBlocker.classList.add('display_none')
@@ -116,7 +119,7 @@ const showElement = (element)=>{
 }
 
 
-const hideElement = (element)=>{
+export const hideElement = (element)=>{
     const elementHtml = document.getElementById(element)
     elementHtml.classList.add('display_none')
     const dashBoardBlocker = document.getElementById('dashboard_blur')
@@ -133,6 +136,7 @@ const showChatCallElements = ()=>{
 const showVideoCallElements = ()=>{
     showElement('call_buttons')
     showElement('remote_video')
+    showElement('remote_video2')
     showElement('new_message')
     hideElement('video_placeholder')
     desableDashboard()

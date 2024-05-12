@@ -122,5 +122,6 @@ export const getRighttMessage  = (message) =>{
     messageParagh.classList.add('message_right_paragraph')
     messageParagh.innerHTML = message
     messageContainer.appendChild(messageParagh)
+    // messageContainer.scrollTop = messageContainer.scrollHeight;
     return messageContainer
 }

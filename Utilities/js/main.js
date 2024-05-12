@@ -24,13 +24,20 @@ personalCodeCopyButton.addEventListener('click' , ()=>{
 
 const personalCodeChatButton = document.getElementById('personal_code_chat_button')
 const personalCodeVideoButton = document.getElementById('personal_code_video_button')
-
+const hangUpButton = document.getElementById('hang_up_button')
 personalCodeChatButton.addEventListener('click' , ()=>{
     const calleePersonalCode = document.getElementById('personal_code_input').value
     const callType = constants.callType.CHAT_PERSONAL_CODE
     webRTChandler.sendPreOffer(callType , calleePersonalCode)
 })
-
+hangUpButton.addEventListener('click' , ()=>{
+    ui.hideElement('call_buttons')
+    ui.hideElement('remote_video')
+    ui.hideElement('remote_video2')
+    ui.hideElement('new_message')
+    ui.enableDashboard()
+    webRTChandler.closePeerConnection()
+})
 personalCodeVideoButton.addEventListener('click' , ()=>{
     const calleePersonalCode = document.getElementById('personal_code_input').value
     const callType = constants.callType.VIDEO_PERSONAL_CODE

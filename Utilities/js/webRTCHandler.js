@@ -32,7 +32,6 @@ const createPeerConnection  = ()=>{
     }
 
     peerConnection.onicecandidate =(event)=>{
-        console.log("test for getting information from stun server ... ");
         if(event.candidate){
             wss.sendDataUsingWebRTCSignaling({
                 connectedUserSocketID : connectedUserDetails.socketId,
@@ -42,6 +41,7 @@ const createPeerConnection  = ()=>{
             
         }
     }
+
 
     const remoteStream = new MediaStream()
     store.setRemoteStream(remoteStream);
@@ -64,6 +64,10 @@ export const getLocalPreview = ()=>{
         ui.updateLocalVideo(stream)
         store.setLocalStream(stream)
     })
+}
+export const closePeerConnection= ()=>{
+    console.log("dashax")
+    peerConnection.close()
 }
 export const sendPreOffer = (callType , calleePersonalCode) =>{
     const data = {
