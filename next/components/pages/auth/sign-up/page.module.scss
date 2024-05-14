@@ -1,0 +1,66 @@
+.wrapper {
+  background: url("https://kc.demo.bigbluebutton.org/auth/resources/9djm1/login/keycloak/img/keycloak-bg.png")
+    no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  direction: rtl;
+  form {
+    background-color: white;
+    border-top: 3px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .title {
+      font-family: normal;
+      margin-bottom: 0.5rem;
+      // desktop design
+      font-size: 20px;
+    }
+    label {
+      // desktop design
+      font-size: 14px;
+    }
+    .email {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.25rem;
+      &-fa {
+        input {
+          direction: rtl !important;
+          text-align: right !important;
+        }
+      }
+      input {
+        width: 100%;
+        border: 1px solid rgb(228, 226, 226);
+        border-bottom: 1px solid black;
+        text-align: left;
+        direction: ltr;
+        &:focus {
+          outline: 1px solid blue;
+          border-color: blue;
+          border-radius: 0.25rem;
+        }
+        // desktop design
+        padding: 0.5rem;
+      }
+    }
+    .button {
+      width: 100%;
+      background-color: rgb(44, 74, 207);
+      color: white;
+      border-radius: 1px;
+      height: 30px;
+    }
+    // desktop design
+    width: 100%;
+    padding: 2rem 3rem 2rem;
+    gap: 1.5rem;
+    width: 500px;
+  }
+}
