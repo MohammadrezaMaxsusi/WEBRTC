@@ -1,0 +1,36 @@
+@import "@/styles/colors";
+.wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  video {
+    overflow: hidden !important;
+  }
+  .webcam {
+    background-color: $color-text;
+    border-radius: 8px !important;
+    overflow: hidden;
+  }
+  .start {
+    width: fit-content;
+    margin: 0 auto;
+    background-color: $color-primary;
+    color: white;
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+}
+
+@media only screen and (min-width: 1024px) {
+  .wrapper {
+    gap: 1rem;
+    .gap {
+      margin-top: 1rem;
+    }
+    .webcam{
+      height: 270px;
+      width: 428px;
+    }
+  }
+}

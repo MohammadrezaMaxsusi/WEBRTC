@@ -1,0 +1,30 @@
+.button {
+  height: 2.5rem;
+  padding: 0px 3rem;
+  border-radius: 0.5rem;
+  font-family: medium;
+  border: none;
+  &:disabled{
+    background-color: #EBECEF !important;
+    color: #D0D1E1 !important;
+  }
+  cursor: pointer;
+  .loading{
+    width: 20px !important;
+    height: 20px !important;
+    color: #fff !important;
+  }
+  @media only screen and (min-width: 320px) {
+  }
+  @media only screen and (min-width: 375px) {
+  }
+  @media only screen and (min-width: 425px) {
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 1024px) {
+  }
+  @media only screen and (min-width: 1280px) {
+    font-size: 14px;
+  }
+}

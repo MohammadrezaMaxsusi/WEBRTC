@@ -1,0 +1,88 @@
+@import "./colors.scss";
+:root {
+  --max-width: 1100px;
+  --border-radius: 12px;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+}
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: normal;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+// fonts
+@font-face {
+  font-family: normal;
+  src: url("../assets/fonts/3.woff2");
+}
+
+@font-face {
+  font-family: medium;
+  src: url("../assets/fonts/5.woff2");
+}
+
+@font-face {
+  font-family: bold;
+  src: url("../assets/fonts/8.woff2");
+}
+
+input {
+  outline: none;
+}
+
+// table
+.th {
+  text-align: center !important;
+}
+
+@media only screen and (min-width: 1024px) {
+  .th {
+    font-size: 14px;
+    padding-bottom: 1rem !important;
+  }
+}
+.tether-target {
+  width: 100%;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

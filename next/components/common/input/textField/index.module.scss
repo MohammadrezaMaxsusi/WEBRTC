@@ -1,0 +1,70 @@
+@import "@/styles/colors";
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+  .label {
+    color: $color-placeholder;
+  }
+  .input-container {
+    width: 100%;
+    position: relative;
+    .input {
+      width: 100%;
+      background-color: $color-white;
+      height: 47px;
+      padding: 0px 1rem;
+      color: $color-text;
+      border: 1px solid $color-border;
+      border-radius: 10px;
+      &::placeholder {
+        color: $color-placeholder;
+      }
+      &:focus {
+        outline: none;
+      }
+      &-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+  .guide-wrapper {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+    padding-right: 4px;
+    span {
+      font-size: 12px;
+      color: $color-primary;
+    }
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+  .label {
+    font-size: 12px;
+  }
+  .input {
+    font-size: 14px;
+    &::placeholder {
+      font-size: 14px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .label {
+    font-size: 14px;
+  }
+  .input {
+    font-size: 16px;
+    &::placeholder {
+      font-size: 14px;
+    }
+  }
+}

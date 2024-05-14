@@ -1,0 +1,64 @@
+@import "@/styles/colors";
+.wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  video {
+    overflow: hidden !important;
+  }
+  .webcam {
+    background-color: $color-text;
+    border-radius: 8px !important;
+    overflow: hidden;
+  }
+  .start {
+    margin: 0 auto;
+    background-color: $color-primary;
+    color: white;
+  }
+  .stop {
+    background-color: $color-warning;
+    margin: 0 auto;
+    color: white;
+  }
+}
+
+@media only screen and (max-width: 676px) {
+  .wrapper {
+    .webcam {
+      height: 320px;
+      width: 320px;
+    }
+    button {
+      width: 320px;
+    }
+  }
+}
+
+@media only screen and (min-width: 676px) and (max-width: 1023px) {
+  .wrapper {
+    .webcam {
+      height: 280px;
+      width: 280px;
+    }
+    button {
+      width: 280px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .wrapper {
+    .gap {
+      margin-top: 2rem;
+    }
+    .webcam {
+      height: 180px;
+      width: 180px;
+    }
+    button {
+      width: fit-content;
+    }
+  }
+}
