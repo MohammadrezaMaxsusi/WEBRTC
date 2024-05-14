@@ -3,7 +3,7 @@ import Checkbox from "./checkbox";
 import Radio from "./radio";
 import Search from "./search";
 import Upload from "./upload";
-import Video from "./videoRecorder";
+// import Video from "./videoRecorder";
 import Camera from "./camera";
 // import Slider from "./slider";
 // import DatePicker from "./datePicker";
@@ -18,7 +18,7 @@ export default function Input(props: any) {
     radio: <Radio {...props} />,
     search: <Search {...props} />,
     upload: <Upload {...props} />,
-    video: <Video {...props} />,
+    // video: <Video {...props} />,
     camera: <Camera {...props} />,
     // slider: <Slider {...props} />,
     // "date-picker": <DatePicker {...props} />,
