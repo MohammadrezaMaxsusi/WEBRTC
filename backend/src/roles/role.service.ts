@@ -7,11 +7,11 @@ import {
   RoleSuccessMessages,
 } from "./enums/role-messages.enum";
 import { listOptions } from "../shared/dtos/requests/list-options.dto";
-import { SUPER_ADMIN_ROLE } from "../shared/constants/super-admin-role.constant";
 import _ from "lodash";
 import { IParamIdDto } from "../shared/dtos/requests/param-id.dto";
 import { PermissionRepository } from "../permissions/permission.repository";
 import { repoFactory } from "../shared/constants/repo-factory.constant";
+import { MAIN_ROLES_ENUM } from "../shared/enums/main-roles.enum";
 
 const permissionRepo = repoFactory.getRepo<PermissionRepository>("permission");
 const roleRepo = repoFactory.getRepo<RoleRepository>("role");
@@ -84,7 +84,7 @@ export const updateOneRole = async (
     };
   }
 
-  if (roleExists.name === SUPER_ADMIN_ROLE) {
+  if (roleExists.name === MAIN_ROLES_ENUM.SUPER_ADMIN) {
     return {
       statusCode: httpStatus.FORBIDDEN,
       message: RoleErrorMessages.FORBIDDEN_UPDATE_SUPER_ADMIN_ROLE,
@@ -126,7 +126,7 @@ export const deleteOneRole = async (
     };
   }
 
-  if (roleExists.name === SUPER_ADMIN_ROLE) {
+  if (roleExists.name === MAIN_ROLES_ENUM.SUPER_ADMIN) {
     return {
       statusCode: httpStatus.FORBIDDEN,
       message: RoleErrorMessages.FORBIDDEN_DELETE_SUPER_ADMIN_ROLE,

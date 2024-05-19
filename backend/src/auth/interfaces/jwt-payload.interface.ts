@@ -1,4 +1,4 @@
 export interface IPayload {
-  userId: string;
+  userId: number;
   roleIds: number[];
 }
