@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import styles from "./page.module.scss";
+import styles from "./index.module.scss";
 import { Button, Input, Layout } from "@/components/common";
-import { pageI18 } from "./page_i18";
-import Link from "next/link";
+import { pageI18 } from "./i18";
 
 export default function SignUp() {
   const [checkboxValue, setCheckboxValue] = useState(false);

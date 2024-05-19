@@ -6,6 +6,7 @@ import appRoutes from "./routes/index";
 import { IResponseData } from "./shared/interfaces/response-data.interface";
 import httpStatus from "http-status";
 import { SeederRunner } from "./seeder/seeder-runner";
+import syncDb from "./database/syncDB";
 
 // Create App Instance
 const app = express();
@@ -18,6 +19,8 @@ SeederRunner();
 
 // Request Logger
 app.use(morgan("dev"));
+
+// syncDb();
 
 // Body Parser
 app.use(express.json(), express.urlencoded({ extended: false }));
@@ -35,6 +38,7 @@ app.use("*", (req, res, next) => {
 
   return res.status(404).json(response);
 });
+
 // Run App
 app.listen(configurations.app.port, () => {
   console.log(`Server running on port ${configurations.app.port}`);

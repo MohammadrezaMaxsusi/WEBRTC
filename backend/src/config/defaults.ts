@@ -3,7 +3,7 @@ import { IConfig } from "./config.interface";
 export const defaults: IConfig = {
   app: {
     name: "APP-NAME",
-    port: 3000,
+    port: 3001,
     superAdmin: { username: "super_admin", password: "meetingAppPassword" },
   },
   db: {
@@ -11,7 +11,7 @@ export const defaults: IConfig = {
     name: "chat-app",
     port: 5432,
     username: "postgres",
-    password: "2122",
+    password: "postgres",
   },
   jwt: {
     secret: "simple-secret",
