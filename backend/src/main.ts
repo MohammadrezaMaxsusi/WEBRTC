@@ -6,13 +6,21 @@ import appRoutes from "./routes/index";
 import { IResponseData } from "./shared/interfaces/response-data.interface";
 import httpStatus from "http-status";
 import { SeederRunner } from "./seeder/seeder-runner";
+<<<<<<< HEAD
 import syncDb from "./database/syncDB";
+=======
+import cors from "cors";
+>>>>>>> d999d1f1fadb29c95b63534971fc9a75b37b72cf
 
 // Create App Instance
 const app = express();
 
-// Conncet To Database
-// connectDB();
+const corsOptions = {
+  origin: "*", // Replace with the URL of your React app
+  methods: "GET,PUT,PATCH,POST,DELETE",
+  credentials: false,
+};
+app.use(cors(corsOptions));
 
 // Run Seeder
 SeederRunner();

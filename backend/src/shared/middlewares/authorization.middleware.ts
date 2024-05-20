@@ -3,7 +3,6 @@ import { IResponseData } from "../interfaces/response-data.interface";
 import { IPayload } from "../../auth/interfaces/jwt-payload.interface";
 import httpStatus from "http-status";
 import { Types } from "mongoose";
-import { SUPER_ADMIN_ROLE } from "../constants/super-admin-role.constant";
 import { RequestWithPayload } from "../interfaces/request-with-payload.interface";
 import { repoFactory } from "../constants/repo-factory.constant";
 import sequelize from "../../database/connectToDB";
@@ -11,6 +10,7 @@ import Permission from "../../permissions/permission.schema";
 import Role from "../../roles/role.schema";
 import PermissionRole from "../../permissionRole/permissionRole.schema";
 import { Op } from "sequelize";
+import { MAIN_ROLES_ENUM } from "../enums/main-roles.enum";
 
 const permissionRepo = sequelize.getRepository(Permission);
 const roleRepo = sequelize.getRepository(Role);
@@ -36,7 +36,7 @@ export const Authorization = (permissionName: string) => {
     const isSuperAdmin = await roleRepo.findOne({
       where: {
         id: { [Op.in]: payload.roleIds },
-        name: SUPER_ADMIN_ROLE,
+        name: MAIN_ROLES_ENUM.SUPER_ADMIN,
       },
     });
 
