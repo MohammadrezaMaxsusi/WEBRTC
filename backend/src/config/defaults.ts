@@ -3,7 +3,7 @@ import { IConfig } from "./config.interface";
 export const defaults: IConfig = {
   app: {
     name: "APP-NAME",
-    port: 3001,
+    port: 3002,
     superAdmin: { username: "super_admin", password: "meetingAppPassword" },
   },
   db: {

@@ -4,7 +4,7 @@ const V1 = "api/v1";
 const Urls = {
   // base
   baseProductionURL: "https://exchange-backend.darkube.app/",
-  baseLocalURL: "http://localhost:3001/",
+  baseLocalURL: "http://localhost:3002/",
 
   socketUrl: "https://exchange-socket-stage.darkube.app/",
 
