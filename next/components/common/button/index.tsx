@@ -8,10 +8,11 @@ type Props = {
   className?: String;
   loading?: Boolean;
   disabled?: boolean;
+  children?: React.ReactNode;
 };
 
 export default function Button(props: Props) {
-  const { title, onClick, className, loading, disabled = false } = props;
+  const { title, onClick, className, loading, disabled = false, children } = props;
   const child = loading ? <></> : title;
   return (
     <button
@@ -20,6 +21,7 @@ export default function Button(props: Props) {
       disabled={disabled}
     >
       {loading ? <></> : child}
+      {children}
     </button>
   );
 }

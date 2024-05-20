@@ -1,0 +1,35 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    .username {
+      font-size: 14px;
+    }
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    .accept {
+      background-color: rgb(57, 57, 57);
+    }
+    .reject{
+      background-color: rgb(243, 82, 90);
+    }
+    .action{
+      width: 35px;
+      height: 35px;
+      max-height: 35px;
+      max-width: 35px;
+      padding: 0;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
