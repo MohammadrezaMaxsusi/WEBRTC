@@ -9,10 +9,11 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { login } from "@/store/auth/actions";
 import { getErrorTextTwo } from "@/utils/request/getErrorText";
+import { LoginDataTypes } from "./types";
 
 export default function SignIn() {
   const [checkboxValue, setCheckboxValue] = useState(false);
-  const [loginData, setLoadingData] = useState({
+  const [loginData, setLoadingData] = useState<LoginDataTypes>({
     username: "",
     password: "",
   });
