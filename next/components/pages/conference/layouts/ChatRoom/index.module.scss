@@ -1,5 +1,10 @@
-.wrapper{
+.wrapper {
+  width: 100%;
   background-color: white;
   border-radius: 1.5rem;
+  padding: 1rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
   flex: 1;
 }
