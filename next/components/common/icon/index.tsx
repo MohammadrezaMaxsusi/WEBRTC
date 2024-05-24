@@ -17,6 +17,8 @@ export default function Icon(props: IconComponentType) {
     exit: <Icons.Exit {...props} />,
     arrow: <Icons.Arrow {...props} />,
     logout: <Icons.Logout {...props} />,
+    "camera-on": <Icons.CameraOn {...props} />,
+    "camera-off": <Icons.CameraOff {...props} />,
   };
   return <p style={{width:size,height:"auto",display:"flex"}}>{iconsMap[name]}</p>;
 }

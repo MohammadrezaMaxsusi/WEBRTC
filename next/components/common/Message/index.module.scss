@@ -1,0 +1,50 @@
+.wrapper {
+  max-width: 80%;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  .userInfo {
+    display: flex;
+    align-items: center !important;
+    gap: 0.25rem;
+    flex-direction: row-reverse;
+    .username {
+      font-size: 14px;
+    }
+  }
+  .message {
+    background-color: rgb(245, 245, 245);
+    color: rgb(51, 51, 51);
+    padding: 0.75rem 0.5rem 0.25rem;
+    border-radius: 0.75rem;
+    border-top-left-radius: 0.25rem;
+    margin-left: 42px;
+    text-align: left;
+    font-size: 14px;
+  }
+}
+
+.isSelf {
+  max-width: 80%;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  .userInfo {
+    display: flex;
+    align-items: center !important;
+    gap: 0.25rem;
+    .username {
+      font-size: 14px;
+    }
+  }
+  .message {
+    background-color: rgb(51, 51, 51);
+    color: rgb(245, 245, 245);
+    padding: 0.75rem 0.5rem 0.25rem;
+    border-radius: 0.75rem;
+    border-top-right-radius: 0.25rem;
+    margin-right: 42px;
+    font-size: 14px;
+  }
+}

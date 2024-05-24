@@ -21,7 +21,7 @@ export default function ConfRequestToJoin(props: ConfRequestToJoinType) {
           onClick={() => {}}
           className={`${styles.action} ${styles.accept}`}
         >
-          <Icon name="tick" size="14" color="yellow" />
+          {/* <Icon name="tick" size="14" color="yellow" /> */}
         </Button>
         <Button
           title={""}

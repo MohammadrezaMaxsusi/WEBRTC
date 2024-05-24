@@ -26,7 +26,7 @@ export default function ConfNavbar() {
           onClick={() => {}}
           className={`${styles.leave}`}
         >
-          <Icon name="logout" size="40" color="rgb(243, 82, 90)" />
+          <Icon name="logout" size="30" color="rgb(243, 82, 90)" />
         </Button>
       </div>
     </div>

@@ -1,0 +1,10 @@
+.wrapper{
+  display: flex;
+  gap: 1rem;
+  .participant{
+    flex: 1;
+    height: clamp(100px, 10vw, 140px);
+    background-color: rgb(211, 211, 211);
+    border-radius: 1rem;
+  }
+}

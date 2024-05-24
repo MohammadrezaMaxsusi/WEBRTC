@@ -6,4 +6,5 @@ export const pageI18 = {
   Participants: "عضو",
   "Weekly Meeting": "جلسه هفتگی",
   "Leave Meeting": "ترک جلسه",
+  "Type a message": "یک پیام بنویس ..."
 };
