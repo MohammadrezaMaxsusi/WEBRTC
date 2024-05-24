@@ -1,15 +1,18 @@
 import React from "react";
 import styles from "./index.module.scss";
 import Avatar from "../Avatar";
+import Link from "next/link";
 
 export default function ConfSidebar() {
-  const pages = [0, 0, 0, 0, 0];
+  const pages = ["conferences", "conference", "", "", ""];
   return (
     <div className={styles.wrapper}>
       <Avatar size={55} />
       <div className={styles.pages}>
-        {pages.map((page: number, index: number) => (
-          <div className={styles.page} key={"page-" + index}></div>
+        {pages.map((page: string, index: number) => (
+          <Link href={"/" + page} className={styles.page} key={"page-" + index}>
+            {page}
+          </Link>
         ))}
       </div>
       <div className={styles.user}>

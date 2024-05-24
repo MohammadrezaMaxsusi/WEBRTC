@@ -14,9 +14,11 @@
     gap: 1.75rem;
     margin-top: 2.5rem;
     .page {
-      padding: 1rem;
+      padding: 0.25rem;
       border-radius: 0.5rem;
       border: 1px solid rgb(245, 245, 245);
+      color: white;
+      font-size: 12px;
     }
   }
   .user{

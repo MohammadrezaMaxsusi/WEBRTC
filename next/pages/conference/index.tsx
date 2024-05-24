@@ -1,2 +1,2 @@
-import Conferenec from "@/components/pages/conference";
-export default Conferenec;
+import Conference from "@/components/pages/conference";
+export default Conference;
