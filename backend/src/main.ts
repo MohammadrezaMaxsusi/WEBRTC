@@ -7,7 +7,7 @@ import { IResponseData } from "./shared/interfaces/response-data.interface";
 import httpStatus from "http-status";
 import { SeederRunner } from "./seeder/seeder-runner";
 import cors from "cors";
-
+import syncDb from "./database/syncDB"
 // Create App Instance
 const app = express();
 

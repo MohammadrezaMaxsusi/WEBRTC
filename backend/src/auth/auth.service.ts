@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import { IResponseData } from "../shared/interfaces/response-data.interface";
 import { ILoginWithUsernameAndPassword } from "./dto/login-with-password";
-import { compare, hash } from "bcrypt";
+import { compare, hash } from "bcryptjs";
 import { generateJWT } from "./functions/generate-token.function";
 import sequelize from "../database/connectToDB";
 import User from "../users/user.schema";
