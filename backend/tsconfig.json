@@ -10,6 +10,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/webRTCHandler/main.js", "src/webRTCHandler/elements.js", "src/constant/constants.js"],
   "exclude": ["node_modules"]
 }
