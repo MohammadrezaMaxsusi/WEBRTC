@@ -19,12 +19,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Run Seeder
-// SeederRunner();
+SeederRunner();
 
 // Request Logger
 app.use(morgan("dev"));
 
-syncDb();
+// syncDb();
 
 // Body Parser
 app.use(express.json(), express.urlencoded({ extended: false }));
