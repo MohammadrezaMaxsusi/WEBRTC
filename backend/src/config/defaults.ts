@@ -8,10 +8,10 @@ export const defaults: IConfig = {
   },
   db: {
     host: "localhost",
-    name: "chat-app",
+    name: "videoranDB",
     port: 5432,
-    username: "postgres",
-    password: "postgres",
+    username: "maxsusi",
+    password: "P@ssw0rd++",
   },
   jwt: {
     secret: "simple-secret",

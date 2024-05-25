@@ -1,4 +1,4 @@
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 import { configurations } from "../config/configurations";
 import sequelize from "../database/connectToDB";
 import Role from "../roles/role.schema";

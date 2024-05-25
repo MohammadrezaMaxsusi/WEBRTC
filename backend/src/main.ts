@@ -7,7 +7,7 @@ import { IResponseData } from "./shared/interfaces/response-data.interface";
 import httpStatus from "http-status";
 import { SeederRunner } from "./seeder/seeder-runner";
 import cors from "cors";
-
+import syncDb from "./database/syncDB"
 // Create App Instance
 const app = express();
 
@@ -19,12 +19,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Run Seeder
-SeederRunner();
+// SeederRunner();
 
 // Request Logger
 app.use(morgan("dev"));
 
-// syncDb();
+syncDb();
 
 // Body Parser
 app.use(express.json(), express.urlencoded({ extended: false }));

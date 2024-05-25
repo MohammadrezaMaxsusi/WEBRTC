@@ -10,7 +10,7 @@ import { ICheckUserRolePermission } from "./dto/request/check-user-with-role-per
 import mongoose, { Types } from "mongoose";
 import { IAddRoleToUser } from "./dto/request/add-role-to-user.dto";
 import { IRemoveRoleFromUser } from "./dto/request/remove-role-from-user.dto";
-import { hash } from "bcrypt";
+import { hash } from "bcryptjs";
 // import { IRole } from "../roles/role.interface";
 import { IParamIdDto } from "../shared/dtos/requests/param-id.dto";
 import { IPayload } from "../auth/interfaces/jwt-payload.interface";
