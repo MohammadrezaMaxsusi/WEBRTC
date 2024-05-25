@@ -1,8 +1,30 @@
 .wrapper {
-  // flex-grow: 1;
   width: calc(100% / 3 - 1.5rem);
-  height: 100px;
   background-color: white;
   margin-bottom: 2rem;
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem 2.5rem 1rem;
+  box-shadow: 0px 0px 20px rgb(212, 212, 212);
+  .title {
+    font-size: 18px;
+    font-family: medium;
+  }
+  .createdAt {
+    font-size: 13px;
+    color: rgb(138, 138, 138);
+    margin-top: 0.25rem;
+  }
+  .participants {
+    margin-top: 1rem;
+    padding: 0.25rem 0.75rem 0.25rem 1.5rem;
+    border: 1px solid rgb(199, 199, 199);
+    border-radius: 3rem;
+    width: fit-content;
+    font-size: 20px;
+    span{
+      font-size: 14px;
+    }
+  }
 }

@@ -1,10 +1,6 @@
 export const pageI18 = {
-  "Request to join": "درخواست عضویت",
-  Unknown: "ناشناس",
-  "Meeting Task List": "لیست مباحث جلسه",
-  "Chat Room": "گفتگوها",
+  "Bachelors in science - Full 2018": "دوره تخصصی یادگیری بک‌اند",
+  "1 Nov 2024": "۱۴۰۳/۰۳/۰۵",
   Participants: "عضو",
-  "Weekly Meeting": "جلسه هفتگی",
-  "Leave Meeting": "ترک جلسه",
-  "Type a message": "یک پیام بنویس ..."
+  "Build your own class": "کلاس خودت رو بساز",
 };

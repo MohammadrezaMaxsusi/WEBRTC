@@ -5,6 +5,7 @@ import Arrow from "./arrow";
 import Logout from "./logout";
 import CameraOn from "./cameraOn";
 import CameraOff from "./cameraOff";
+import FilledPlus from "./filled-plus";
 
 export const Icons = {
   User,
@@ -13,5 +14,6 @@ export const Icons = {
   Arrow,
   Logout,
   CameraOn,
-  CameraOff
+  CameraOff,
+  FilledPlus
 };
