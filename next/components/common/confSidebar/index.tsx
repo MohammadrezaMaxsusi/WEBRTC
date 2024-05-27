@@ -4,7 +4,7 @@ import Avatar from "../Avatar";
 import Link from "next/link";
 
 export default function ConfSidebar() {
-  const pages = ["conferences", "conference", "", "", ""];
+  const pages = ["conferences", "conference", "create", "", ""];
   return (
     <div className={styles.wrapper}>
       <Avatar size={55} />
