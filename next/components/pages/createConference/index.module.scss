@@ -1,14 +1,20 @@
 .wrapper {
   direction: rtl;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(51, 51, 51);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   max-width: 50vw;
   margin: 0 auto;
-  box-shadow: 0px 0px 20px rgb(213, 213, 213);
   overflow: hidden;
   direction: ltr;
+  box-shadow: 0px 0px 20px rgb(228, 228, 228);
+  .getName {
+    transform: translateX(0);
+  }
+  .getDate {
+    transform: translateX(-50vw);
+  }
   .rail {
     direction: rtl;
     overflow: hidden;
@@ -24,15 +30,24 @@
     margin-top: auto;
     margin-bottom: 10%;
     padding: 1rem;
-    background-color: rgb(38, 143, 255);
     width: 50vw;
+    display: flex;
+    gap: 1rem;
+    .next {
+      padding: 0 2rem;
+      height: 46px;
+      font-size: 16px;
+      border-radius: 2rem;
+      background-color: rgb(38, 143, 255);
+      color: white;
+    }
+    .prev {
+      padding: 0 2rem;
+      height: 46px;
+      font-size: 16px;
+      border-radius: 2rem;
+      background-color: transparent;
+      color: white;
+    }
   }
-}
-
-.getName {
-  transform: translateX(0);
-}
-
-.getOptions{
-  transform: translateX(-50vw);
 }
