@@ -8,7 +8,7 @@ export default function ConfMainView() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}></div>
-      <div className={styles.reactions}>
+      {/* <div className={styles.reactions}>
         {[1, 2, 3].map((item: number, index: number) => (
           <Button
             key={"action" + index}
@@ -17,8 +17,8 @@ export default function ConfMainView() {
             className={`${styles.reaction}`}
           ></Button>
         ))}
-      </div>
-      <div className={styles.footer}>
+      </div> */}
+      {/* <div className={styles.footer}>
         <Button
           title={""}
           onClick={() => {}}
@@ -34,8 +34,8 @@ export default function ConfMainView() {
           onClick={() => {}}
           className={`${styles.option}`}
         ></Button>
-      </div>
-      {participants.length <= 3 ? (
+      </div> */}
+      {/* {participants.length <= 3 ? (
         <div className={styles.participants}>
           {participants.map((item: number, index: number) => (
             <div
@@ -44,7 +44,7 @@ export default function ConfMainView() {
             ></div>
           ))}
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }
