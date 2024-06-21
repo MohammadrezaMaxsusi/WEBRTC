@@ -1,11 +1,15 @@
 import { query } from "express-validator";
 import { listOptionsDto } from "../../../shared/dtos/requests/list-options.dto";
 
+export interface IFindUsersListDto {
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+}
 export const FindUsersListDto = [
-  query("_id")
-    .optional()
-    .isMongoId()
-    .withMessage("فرمت آیدی وارد شده صحیح نمیباشد"),
+  query("id").optional().isInt().withMessage("فرمت آیدی وارد شده صحیح نمیباشد"),
 
   // TODO ADD REGEX FOR USERNAME
   query("username")
@@ -15,7 +19,6 @@ export const FindUsersListDto = [
     .withMessage("نام کاربری باید رشته باشد")
     .isAlphanumeric("en-US")
     .withMessage("نام کاربری شامل حروف انگلیسی و اعداد می باشد")
-    .isLength({ min: 4, max: 20 })
     .withMessage("حداقل طول نام کاربری ۴ و حداکثر ۲۰ کاراکتر می باشد")
     .toLowerCase(),
 
@@ -24,7 +27,6 @@ export const FindUsersListDto = [
     .trim()
     .isString()
     .withMessage("نام باید رشته باشد")
-    .isLength({ min: 3, max: 32 })
     .withMessage("حداقل طول نام 3 و حداکثر 32 کاراکتر می باشد"),
 
   query("lastName")
@@ -32,7 +34,6 @@ export const FindUsersListDto = [
     .trim()
     .isString()
     .withMessage("نام خانوادگی باید رشته باشد")
-    .isLength({ min: 3, max: 32 })
     .withMessage("حداقل طول نام خانوادگی 3 و حداکثر 32 کاراکتر می باشد"),
 
   query("email")

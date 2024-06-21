@@ -1,4 +1,3 @@
-import { RoleRepository } from "./role.repository";
 import { IRole } from "./role.interface";
 import { IResponseData } from "../shared/interfaces/response-data.interface";
 import httpStatus from "http-status";
@@ -9,17 +8,17 @@ import {
 import { listOptions } from "../shared/dtos/requests/list-options.dto";
 import _ from "lodash";
 import { IParamIdDto } from "../shared/dtos/requests/param-id.dto";
-import { PermissionRepository } from "../permissions/permission.repository";
-import { repoFactory } from "../shared/constants/repo-factory.constant";
 import { MAIN_ROLES_ENUM } from "../shared/enums/main-roles.enum";
+import Role from "./role.schema";
+import sequelize from "../database/connectToDB";
+import { findAllOptionsHandler } from "../shared/functions/findAllOptionsHandler.function";
 
-const permissionRepo = repoFactory.getRepo<PermissionRepository>("permission");
-const roleRepo = repoFactory.getRepo<RoleRepository>("role");
+const roleRepo = sequelize.getRepository(Role);
 
 export const createRole = async (
   data: Partial<IRole>
 ): Promise<IResponseData> => {
-  const duplicateRole = await roleRepo.findOne({ name: data.name });
+  const duplicateRole = await roleRepo.findOne({ where: { name: data.name } });
 
   if (duplicateRole) {
     return {
@@ -43,12 +42,16 @@ export const findAllRoles = async (
   const options: listOptions = _.pick(data, ["asc", "limit", "page", "sort"]);
   data = _.omit(data, ["asc", "limit", "page", "sort"]);
 
-  const result = await roleRepo.findAll(data, options);
+  const listOptions = findAllOptionsHandler(options);
 
-  const count = await roleRepo.countAll(data);
+  const result = await roleRepo.findAll({
+    where: { ...data },
+    ...listOptions,
+  });
+
+  const count = await roleRepo.count({ where: { ...data } });
 
   return {
-    message: RoleSuccessMessages.LISTED,
     data: result,
     metadata: { totalCount: count },
   };
@@ -57,7 +60,7 @@ export const findAllRoles = async (
 export const findOneRole = async (
   data: Partial<IRole>
 ): Promise<IResponseData> => {
-  const result = await roleRepo.findOne(data);
+  const result = await roleRepo.findOne({ where: { ...data } });
 
   if (!result) {
     return {
@@ -75,7 +78,9 @@ export const findOneRole = async (
 export const updateOneRole = async (
   data: Partial<IRole>
 ): Promise<IResponseData> => {
-  const roleExists = await roleRepo.findOne(_.pick(data, ["_id"]));
+  const roleExists = await roleRepo.findOne({
+    where: { id: data.id },
+  });
 
   if (!roleExists) {
     return {
@@ -91,33 +96,31 @@ export const updateOneRole = async (
     };
   }
 
-  const duplicateRole = await roleRepo.findOne({ name: data?.name });
+  const duplicateRole = await roleRepo.findOne({ where: { name: data?.name } });
 
-  if (
-    duplicateRole &&
-    roleExists?._id?.valueOf() !== duplicateRole?._id?.valueOf()
-  ) {
+  if (duplicateRole && roleExists?.id !== duplicateRole?.id) {
     return {
       statusCode: httpStatus.CONFLICT,
       message: RoleErrorMessages.DUPLICATE,
     };
   }
 
-  const result = (await roleRepo.findOneAndUpdate(
-    _.pick(data, ["_id"]),
-    _.omit(data, ["_id"])
-  )) as IRole;
+  const result = await roleRepo.update(
+    { ..._.omit(data, ["id"]) },
+    { where: { id: data.id } }
+  );
 
   return {
     message: RoleSuccessMessages.UPDATED,
-    data: result,
   };
 };
 
 export const deleteOneRole = async (
   data: Partial<IRole>
 ): Promise<IResponseData> => {
-  const roleExists = await roleRepo.findOne(_.pick(data, ["_id"]));
+  const roleExists = await roleRepo.findOne({
+    where: { id: data.id },
+  });
 
   if (!roleExists) {
     return {
@@ -133,44 +136,43 @@ export const deleteOneRole = async (
     };
   }
 
-  const result = (await roleRepo.findOneAndSoftDelete(
-    _.pick(data, ["_id"])
-  )) as IRole;
+  const result = await roleRepo.destroy({
+    where: { id: data.id },
+  });
 
   return {
     message: RoleSuccessMessages.DELETED,
-    data: result,
   };
 };
 
-export const hardDeleteOneRole = async (
-  data: IParamIdDto
-): Promise<IResponseData> => {
-  const roleExists = await roleRepo.findOneAndHardDelete(data);
+// export const hardDeleteOneRole = async (
+//   data: IParamIdDto
+// ): Promise<IResponseData> => {
+//   const roleExists = await roleRepo.destroy({ where: { ...data } });
 
-  if (!roleExists) {
-    return {
-      statusCode: httpStatus.NOT_FOUND,
-      message: RoleErrorMessages.NOT_FOUND,
-    };
-  }
+//   if (!roleExists) {
+//     return {
+//       statusCode: httpStatus.NOT_FOUND,
+//       message: RoleErrorMessages.NOT_FOUND,
+//     };
+//   }
 
-  return {};
-};
+//   return {};
+// };
 
-export const getPermissions = async (
-  data: IParamIdDto
-): Promise<IResponseData> => {
-  const roleExists = await roleRepo.findOne(data);
+// export const getPermissions = async (
+//   data: IParamIdDto
+// ): Promise<IResponseData> => {
+//   const roleExists = await roleRepo.findOne({where:{...data}, });
 
-  if (!roleExists) {
-    return {
-      statusCode: httpStatus.NOT_FOUND,
-      message: RoleErrorMessages.NOT_FOUND,
-    };
-  }
+//   if (!roleExists) {
+//     return {
+//       statusCode: httpStatus.NOT_FOUND,
+//       message: RoleErrorMessages.NOT_FOUND,
+//     };
+//   }
 
-  return {
-    data: await permissionRepo.getRolePermissions(data._id),
-  };
-};
+//   return {
+//     data: await permissionRepo.getRolePermissions(data._id),
+//   };
+// };

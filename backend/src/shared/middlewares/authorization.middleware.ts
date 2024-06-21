@@ -4,7 +4,6 @@ import { IPayload } from "../../auth/interfaces/jwt-payload.interface";
 import httpStatus from "http-status";
 import { Types } from "mongoose";
 import { RequestWithPayload } from "../interfaces/request-with-payload.interface";
-import { repoFactory } from "../constants/repo-factory.constant";
 import sequelize from "../../database/connectToDB";
 import Permission from "../../permissions/permission.schema";
 import Role from "../../roles/role.schema";

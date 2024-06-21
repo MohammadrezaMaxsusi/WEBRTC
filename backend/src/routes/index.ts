@@ -1,27 +1,23 @@
 import { Router } from "express";
 import userController from "../users/user.controller";
 import authContorller from "../auth/auth.controller";
+import permissionController from "../permissions/permission.controller";
+import roleController from "../roles/role.controller";
+import sessionController from "../session/session.controller";
+import sessionUsersController from "../sessionUser/sessionUser.controller";
+
 const router = Router();
 
-// Endpoints of authentication
 router.use("/auth", authContorller);
 
-// Endpoints of user entity
 router.use("/users", userController);
 
-// // Endpoints of role entity
-// router.use("/roles", roleController);
+router.use("/roles", roleController);
 
-// // Endpoints of permission entity
-// router.use("/permissions", permissionController);
+router.use("/permissions", permissionController);
 
-// // Endpoints of class entity
-// router.use("/classes", classController);
+router.use("/sessions", sessionController);
 
-// // Endpoints of class sessions entity
-// router.use("/classes/sessions", classSessionController);
-
-// // Endpoints of class log entity
-// router.use("/classLogs", classLogController);
+router.use("/sessionUsers", sessionUsersController);
 
 export default router;

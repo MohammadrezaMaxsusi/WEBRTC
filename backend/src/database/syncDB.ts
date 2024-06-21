@@ -1,6 +1,6 @@
 import sequelize from "./connectToDB";
 
-
-async function syncDb() {
+export async function syncdb() {
   await sequelize.sync({ alter: true });
+  process.exit(0);
 }

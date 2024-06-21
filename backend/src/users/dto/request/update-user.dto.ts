@@ -1,6 +1,14 @@
 import { body } from "express-validator";
 import { ParamIdDto } from "../../../shared/dtos/requests/param-id.dto";
 
+export interface IUpdateUserDto {
+  id: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+}
+
 export const UpdateUserDto = [
   ...ParamIdDto,
 

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/main.js",
     "dev": "nodemon ./src/main.ts",
+    "syncdb": "npm run build && sync=true node ./dist/main.js",
     "build": "rm -rf ./dist && tsc"
   },
   "author": "",

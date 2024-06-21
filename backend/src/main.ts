@@ -7,6 +7,7 @@ import { IResponseData } from "./shared/interfaces/response-data.interface";
 import httpStatus from "http-status";
 import { SeederRunner } from "./seeder/seeder-runner";
 import cors from "cors";
+import { syncdb } from "./database/syncDB";
 
 // Create App Instance
 const app = express();
@@ -42,5 +43,10 @@ app.use("*", (req, res, next) => {
 });
 // Run App
 app.listen(configurations.app.port, () => {
+  if (process.env.sync === "true") {
+    (async () => {
+      await syncdb();
+    })();
+  }
   console.log(`Server running on port ${configurations.app.port}`);
 });

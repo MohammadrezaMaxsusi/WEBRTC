@@ -1,14 +1,14 @@
 import { IBaseModel } from "../../base/model.base";
 
 export class BaseResponseDto {
-  id: string;
+  id: number;
   createdAt: number;
   updatedAt: number;
   deletedAt?: number;
   pid?: string;
 
   constructor(initial: IBaseModel) {
-    this.id = initial._id?.toString();
+    this.id = initial.id;
     this.createdAt = initial.createdAt;
     this.updatedAt = initial.updatedAt;
     this.deletedAt = initial?.deletedAt;

@@ -16,6 +16,12 @@ export class listOptions {
   // searchValue?: string;
 }
 
+export interface IListOptionsDto {
+  sort?: string;
+  asc?: boolean;
+  limit?: number;
+  page?: number;
+}
 export const listOptionsDto = [
   query("sort").optional().isString().trim(),
   query("asc")

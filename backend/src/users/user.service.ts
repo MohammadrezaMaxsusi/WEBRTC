@@ -14,9 +14,10 @@ import { hash } from "bcrypt";
 // import { IRole } from "../roles/role.interface";
 import { IParamIdDto } from "../shared/dtos/requests/param-id.dto";
 import { IPayload } from "../auth/interfaces/jwt-payload.interface";
-import { repoFactory } from "../shared/constants/repo-factory.constant";
 import sequelize from "../database/connectToDB";
 import User from "./user.schema";
+import { findAllOptionsHandler } from "../shared/functions/findAllOptionsHandler.function";
+import { IUpdateUserDto } from "./dto/request/update-user.dto";
 
 // const permissionRepo = repoFactory.getRepo<PermissionRepository>("permission");
 // const roleRepo = repoFactory.getRepo<RoleRepository>("role");
@@ -48,86 +49,98 @@ export const createUser = async (
   };
 };
 
-// export const findOneUser = async (
-//   data: Partial<IUser>
-// ): Promise<IResponseData> => {
-//   const result = await userRepo.findOne(data);
+export const findOneUser = async (
+  data: IParamIdDto
+): Promise<IResponseData> => {
+  const result = await userRepo.findOne({ where: { id: data.id } });
 
-//   if (!result) {
-//     return {
-//       statusCode: httpStatus.NOT_FOUND,
-//       message: "کاربر پیدا نشد",
-//     };
-//   }
+  if (!result) {
+    return {
+      statusCode: httpStatus.NOT_FOUND,
+      message: "کاربر پیدا نشد",
+    };
+  }
 
-//   return {
-//     data: new UserResponseDto(result),
-//   };
-// };
+  return {
+    data: result,
+  };
+};
 
-// export const findAllUsers = async (
-//   data: Partial<IUser> & listOptions
-// ): Promise<IResponseData> => {
-//   const options: listOptions = _.pick(data, ["asc", "limit", "page", "sort"]);
-//   data = _.omit(data, ["asc", "limit", "page", "sort"]);
+export const findAllUsers = async (
+  data: Partial<IUser> & listOptions
+): Promise<IResponseData> => {
+  const options: listOptions = _.pick(data, ["asc", "limit", "page", "sort"]);
+  data = _.omit(data, ["asc", "limit", "page", "sort"]);
 
-//   const result = await userRepo.findAll(data, options);
+  const listOptions = findAllOptionsHandler(options);
 
-//   const count = await userRepo.countAll(data);
+  const result = await userRepo.findAll({
+    where: { ...data },
+    ...listOptions,
+  });
+  const count = await userRepo.count({ where: { ...data } });
 
-//   return {
-//     data: result.map((item) => new UserResponseDto(item)),
-//     metadata: { totalCount: count },
-//   };
-// };
+  return {
+    data: result,
+    metadata: { totalCount: count },
+  };
+};
 
-// export const updateOneUser = async (
-//   data: Partial<IUser>
-// ): Promise<IResponseData> => {
-//   const userExists = await userRepo.findOne(_.pick(data, ["_id"]));
+export const updateOneUser = async (
+  data: IUpdateUserDto
+): Promise<IResponseData> => {
+  const { id, username } = data;
 
-//   if (!userExists) {
-//     return {
-//       statusCode: httpStatus.NOT_FOUND,
-//       message: "کاربر با این شناسه پیدا نشد",
-//     };
-//   }
+  const thisUser = await userRepo.findOne({ where: { id } });
+  if (!thisUser) {
+    return {
+      statusCode: httpStatus.NOT_FOUND,
+      message: "کاربر پیدا نشد",
+    };
+  }
 
-//   if (data.password) {
-//     const hashedPassword = await hash(data.password as string, 10);
-//     data.password = hashedPassword;
-//   }
+  if (thisUser.username === "super_admin" && username) {
+    return {
+      statusCode: httpStatus.FORBIDDEN,
+      message: "نام کاربری ادمین کل قابل تغییر نیست",
+    };
+  }
 
-//   const result = (await userRepo.findOneAndUpdate(
-//     _.pick(data, ["_id"]),
-//     _.omit(data, ["_id"])
-//   )) as IUser;
+  if (username && (await userRepo.findOne({ where: { username } }))) {
+    return {
+      statusCode: httpStatus.CONFLICT,
+      message: "این نام کاربری قبلا تعریف شده است",
+    };
+  }
 
-//   return {
-//     data: new UserResponseDto(result),
-//   };
-// };
+  await userRepo.update(data, { where: { id: data.id } });
 
-// export const deleteOneUser = async (
-//   data: Partial<IUser>
-// ): Promise<IResponseData> => {
-//   const userExists = await userRepo.findOne(_.pick(data, ["_id"]));
+  return {};
+};
 
-//   if (!userExists) {
-//     return {
-//       statusCode: httpStatus.NOT_FOUND,
-//       message: "کاربر با این شناسه پیدا نشد",
-//     };
-//   }
+export const deleteOneUser = async (
+  data: IParamIdDto
+): Promise<IResponseData> => {
+  const thisUser = await userRepo.findOne({ where: { id: data.id } });
 
-//   const result = (await userRepo.findOneAndSoftDelete(
-//     _.pick(data, ["_id"])
-//   )) as IUser;
+  if (!thisUser) {
+    return {
+      statusCode: httpStatus.NOT_FOUND,
+      message: "کاربر با این شناسه پیدا نشد",
+    };
+  }
 
-//   return {
-//     data: new UserResponseDto(result),
-//   };
-// };
+  if (thisUser.username === "super_admin") {
+    return {
+      statusCode: httpStatus.FORBIDDEN,
+      message: "حذف ادمین کل ممکن نیست",
+    };
+  }
+
+  await userRepo.destroy({ where: { id: data.id } });
+
+  return {};
+};
 
 // export const hardDeleteOneUser = async (
 //   data: IParamIdDto

@@ -11,7 +11,7 @@ import { responseDataModifier } from "../utils/functions/change-response-data.fu
 
 export function ResponseFormatter(fn: any) {
   return async (req: RequestWithPayload, res: Response, next: NextFunction) => {
-    const requestData = incomingDataCollector(req);
+    let requestData = incomingDataCollector(req);
     const payload = req?.payload;
 
     let responseObject: IResponseData;

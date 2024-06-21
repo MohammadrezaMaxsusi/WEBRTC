@@ -3,6 +3,10 @@ import {
   // addRole,
   // checkUserWithRoleAndPermission,
   createUser,
+  deleteOneUser,
+  findAllUsers,
+  findOneUser,
+  updateOneUser,
   // deleteOneUser,
   // findAllUsers,
   // findOneUser,
@@ -36,45 +40,45 @@ router.post(
   ResponseFormatter(createUser)
 );
 
-// // Find user list
-// router.get(
-//   "/list",
-//   Authentication,
-//   Authorization(userPermissionsEnum.LIST),
-//   FindUsersListDto,
-//   DataValidator,
-//   ResponseFormatter(findAllUsers)
-// );
+// Find user list
+router.get(
+  "/list",
+  Authentication,
+  Authorization(userPermissionsEnum.LIST),
+  FindUsersListDto,
+  DataValidator,
+  ResponseFormatter(findAllUsers)
+);
 
-// // Find One user
-// router.get(
-//   "/byId/:id",
-//   Authentication,
-//   Authorization(userPermissionsEnum.FIND_ONE),
-//   ParamIdDto,
-//   DataValidator,
-//   ResponseFormatter(findOneUser)
-// );
+// Find One user
+router.get(
+  "/byId/:id",
+  Authentication,
+  Authorization(userPermissionsEnum.FIND_ONE),
+  ParamIdDto,
+  DataValidator,
+  ResponseFormatter(findOneUser)
+);
 
-// // Update user
-// router.patch(
-//   "/update/:id",
-//   Authentication,
-//   Authorization(userPermissionsEnum.UPDATE),
-//   UpdateUserDto,
-//   DataValidator,
-//   ResponseFormatter(updateOneUser)
-// );
+// Update user
+router.patch(
+  "/update/:id",
+  Authentication,
+  Authorization(userPermissionsEnum.UPDATE),
+  UpdateUserDto,
+  DataValidator,
+  ResponseFormatter(updateOneUser)
+);
 
-// // Delete user
-// router.delete(
-//   "/delete/:id",
-//   Authentication,
-//   Authorization(userPermissionsEnum.DELETE),
-//   ParamIdDto,
-//   DataValidator,
-//   ResponseFormatter(deleteOneUser)
-// );
+// Delete user
+router.delete(
+  "/delete/:id",
+  Authentication,
+  Authorization(userPermissionsEnum.DELETE),
+  ParamIdDto,
+  DataValidator,
+  ResponseFormatter(deleteOneUser)
+);
 
 // // Hard Delete specific role
 // router.delete(

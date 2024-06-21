@@ -2,34 +2,27 @@ import { Types, isValidObjectId } from "mongoose";
 import { RequestWithPayload } from "../../interfaces/request-with-payload.interface";
 
 export const incomingDataCollector = (req: RequestWithPayload) => {
-  const requestData = {
-    ...req.body,
-    ...req.params,
-    ...req.query,
-  };
-
-  if (requestData.id) {
-    requestData["_id"] = new Types.ObjectId(requestData.id as string);
-    delete requestData.id;
+  let data: any;
+  if (req.method === "GET") {
+    data = {
+      ...req.params,
+      ...req.query,
+    };
+  } else {
+    data = {
+      ...req.body,
+      ...req.params,
+      ...req.query,
+    };
   }
 
-  for (const key in requestData) {
-    if (
-      typeof requestData[key] === "string" &&
-      isValidObjectId(requestData[key])
-    ) {
-      requestData[key] = new Types.ObjectId(requestData[key] as string);
-    } else if (
-      Array.isArray(requestData[key]) &&
-      requestData[key].every(
-        (el: unknown) => typeof el === "string" && isValidObjectId(el)
-      )
-    ) {
-      requestData[key] = requestData[key].map(
-        (el: string) => new Types.ObjectId(el)
-      );
+  if (data.asc && typeof data.asc === "string") {
+    if ((data.asc as string).toLowerCase() === "true") {
+      data.asc = true;
+    } else if ((data.asc as string).toLowerCase() === "false") {
+      data.asc = false;
     }
   }
 
-  return requestData;
+  return data;
 };

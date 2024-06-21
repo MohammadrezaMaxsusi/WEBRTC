@@ -1,26 +1,27 @@
-import { PermissionRepository } from "./permission.repository";
 import { IPermission } from "./permission.interface";
 import { IResponseData } from "../shared/interfaces/response-data.interface";
 import httpStatus from "http-status";
-import { listOptions } from "../shared/dtos/requests/list-options.dto";
-import _ from "lodash";
-import { IAddRoleToPermission } from "./dto/add-role.dto";
-import { uniqueArray } from "../shared/utils/functions/unique-array-items.function";
-import { Types } from "mongoose";
-import { IRemoveRoleFromPermission } from "./dto/remvoe-role.dto";
-import { RoleRepository } from "../roles/role.repository";
-import { ICheckAccessDto } from "./dto/request/check-access.dto";
+import sequelize from "../database/connectToDB";
+import Permission from "./permission.schema";
+import Role from "../roles/role.schema";
+import { ICreatePermissionDto } from "./dto/request/create-permission.dto";
 import { IParamIdDto } from "../shared/dtos/requests/param-id.dto";
-import { repoFactory } from "../shared/constants/repo-factory.constant";
+import _ from "lodash";
+import { listOptions } from "../shared/dtos/requests/list-options.dto";
+import { findAllOptionsHandler } from "../shared/functions/findAllOptionsHandler.function";
+import { IUpdatePermissionDto } from "./dto/request/update-permission.dto";
+import { IAddRoleToPermissionDto } from "./dto/request/add-role-to-permission.dto";
+import PermissionRole from "../permissionRole/permissionRole.schema";
 
-const permissionRepo = repoFactory.getRepo<PermissionRepository>("permission");
-const roleRepo = repoFactory.getRepo<RoleRepository>("role");
+const permissionRepo = sequelize.getRepository(Permission);
+const roleRepo = sequelize.getRepository(Role);
+const permissionRoleRepo = sequelize.getRepository(PermissionRole);
 
 export const createPermission = async (
-  data: Partial<IPermission>
+  data: ICreatePermissionDto
 ): Promise<IResponseData> => {
   const duplicatePermission = await permissionRepo.findOne({
-    name: data.name,
+    where: { name: data.name },
   });
 
   if (duplicatePermission) {
@@ -40,9 +41,9 @@ export const createPermission = async (
 };
 
 export const findOnePermission = async (
-  data: Partial<IPermission>
+  data: IParamIdDto
 ): Promise<IResponseData> => {
-  const result = await permissionRepo.findOne(data);
+  const result = await permissionRepo.findOne({ where: { id: data.id } });
 
   if (!result) {
     return {
@@ -57,14 +58,18 @@ export const findOnePermission = async (
 };
 
 export const findAllPermissions = async (
-  data: Partial<IPermission> & listOptions
+  data: listOptions
 ): Promise<IResponseData> => {
   const options: listOptions = _.pick(data, ["asc", "limit", "page", "sort"]);
   data = _.omit(data, ["asc", "limit", "page", "sort"]);
 
-  const result = await permissionRepo.findAll(data, options);
+  const listOptions = findAllOptionsHandler(options);
 
-  const count = await permissionRepo.countAll(data);
+  const result = await permissionRepo.findAll({
+    where: { ...data },
+    ...listOptions,
+  });
+  const count = await permissionRepo.count({ where: { ...data } });
 
   return {
     data: result,
@@ -73,71 +78,66 @@ export const findAllPermissions = async (
 };
 
 export const updateOnePermission = async (
-  data: Partial<IPermission>
+  data: IUpdatePermissionDto
 ): Promise<IResponseData> => {
-  const permissionExists = await permissionRepo.findOne(_.pick(data, ["_id"]));
+  const permissionExists = await permissionRepo.findOne({
+    where: { id: data.id },
+  });
 
   if (!permissionExists) {
     return {
       statusCode: httpStatus.NOT_FOUND,
-      message: "دسترسی با این شناسه پیدا نشد",
+      message: "دسترسی پیدا نشد",
     };
   }
 
-  const result = (await permissionRepo.findOneAndUpdate(
-    _.pick(data, ["_id"]),
-    _.omit(data, ["_id"])
-  )) as IPermission;
-
-  return {
-    data: result,
-  };
-};
-
-export const deleteOnePermission = async (
-  data: Partial<IPermission>
-): Promise<IResponseData> => {
-  const permissionExists = await permissionRepo.findOne(_.pick(data, ["_id"]));
-
-  if (!permissionExists) {
-    return {
-      statusCode: httpStatus.NOT_FOUND,
-      message: "دسترسی با این شناسه پیدا نشد",
-    };
-  }
-
-  const result = (await permissionRepo.findOneAndSoftDelete(
-    _.pick(data, ["_id"])
-  )) as IPermission;
-
-  return {
-    data: result,
-  };
-};
-
-export const hardDeleteOnePermission = async (
-  data: IParamIdDto
-): Promise<IResponseData> => {
-  const permissionExists = await permissionRepo.findOneAndHardDelete(data);
-
-  if (!permissionExists) {
-    return {
-      statusCode: httpStatus.NOT_FOUND,
-      message: "دسترسی با این شناسه پیدا نشد",
-    };
-  }
+  const result = await permissionRepo.update(
+    { name: data.name },
+    { where: { id: data.id } }
+  );
 
   return {};
 };
 
-export const addRoleToPermission = async (
-  data: IAddRoleToPermission
+export const deleteOnePermission = async (
+  data: IParamIdDto
 ): Promise<IResponseData> => {
-  data.permissionId = new Types.ObjectId(data.permissionId);
-  data.roleId = new Types.ObjectId(data.roleId);
-
   const permissionExists = await permissionRepo.findOne({
-    _id: data.permissionId,
+    where: { id: data.id },
+  });
+
+  if (!permissionExists) {
+    return {
+      statusCode: httpStatus.NOT_FOUND,
+      message: "دسترسی با این شناسه پیدا نشد",
+    };
+  }
+
+  const result = await permissionRepo.destroy({ where: { id: data.id } });
+
+  return {};
+};
+
+// export const hardDeleteOnePermission = async (
+//   data: IParamIdDto
+// ): Promise<IResponseData> => {
+//   const permissionExists = await permissionRepo.findOneAndHardDelete(data);
+
+//   if (!permissionExists) {
+//     return {
+//       statusCode: httpStatus.NOT_FOUND,
+//       message: "دسترسی با این شناسه پیدا نشد",
+//     };
+//   }
+
+//   return {};
+// };
+
+export const addRoleToPermission = async (
+  data: IAddRoleToPermissionDto
+): Promise<IResponseData> => {
+  const permissionExists = await permissionRepo.findOne({
+    where: { id: data.permissionId },
   });
 
   if (!permissionExists) {
@@ -148,7 +148,7 @@ export const addRoleToPermission = async (
   }
 
   const roleExists = await roleRepo.findOne({
-    _id: data.roleId,
+    where: { id: data.roleId },
   });
 
   if (!roleExists) {
@@ -158,28 +158,18 @@ export const addRoleToPermission = async (
     };
   }
 
-  if (Array.isArray(permissionExists.roles)) {
-    const allRoleIds = uniqueArray([
-      ...permissionExists.roles.map((item) => item._id?.toString() as string),
-      data.roleId.toString(),
-    ]).map((item) => new Types.ObjectId(item as string));
-
-    await permissionRepo.findOneAndUpdate(
-      { _id: data.permissionId },
-      {
-        roles: allRoleIds,
-      }
-    );
-  } else {
-    await permissionRepo.findOneAndUpdate(
-      {
-        _id: data.permissionId,
-      },
-      {
-        roles: [data.roleId],
-      }
-    );
+  if (
+    await permissionRoleRepo.findOne({
+      where: { roleId: data.roleId, permissionId: data.permissionId },
+    })
+  ) {
+    return {
+      statusCode: httpStatus.CONFLICT,
+      message: "این دسترسی قبلا به این نقش داده شده است",
+    };
   }
+
+  await permissionRoleRepo.create(data);
 
   return {
     statusCode: httpStatus.CREATED,
@@ -187,13 +177,21 @@ export const addRoleToPermission = async (
 };
 
 export const removeRoleFromPermission = async (
-  data: IRemoveRoleFromPermission
+  data: IAddRoleToPermissionDto
 ): Promise<IResponseData> => {
-  data.permissionId = new Types.ObjectId(data.permissionId);
-  data.roleId = new Types.ObjectId(data.roleId);
+  if (
+    !(await permissionRoleRepo.findOne({
+      where: { roleId: data.roleId, permissionId: data.permissionId },
+    }))
+  ) {
+    return {
+      statusCode: httpStatus.NOT_FOUND,
+      message: "این دسترسی برای این نقش تعریف نشده است",
+    };
+  }
 
   const permissionExists = await permissionRepo.findOne({
-    _id: data.permissionId,
+    where: { id: data.permissionId },
   });
 
   if (!permissionExists) {
@@ -204,7 +202,7 @@ export const removeRoleFromPermission = async (
   }
 
   const roleExists = await roleRepo.findOne({
-    _id: data.roleId,
+    where: { id: data.roleId },
   });
 
   if (!roleExists) {
@@ -214,62 +212,52 @@ export const removeRoleFromPermission = async (
     };
   }
 
-  if (Array.isArray(permissionExists.roles)) {
-    const allRoleIds = [...permissionExists.roles]
-      .map((item) => item._id?.toString())
-      .filter((id) => id !== data.roleId.toString())
-      .map((id) => new Types.ObjectId(id));
-
-    await permissionRepo.findOneAndUpdate(
-      { _id: data.permissionId },
-      {
-        roles: allRoleIds,
-      }
-    );
-  }
+  await permissionRoleRepo.destroy({
+    where: { roleId: data.roleId, permissionId: data.permissionId },
+  });
 
   return {};
 };
 
-export const checkAccessRoleToPermission = async (
-  data: Partial<ICheckAccessDto>
-): Promise<IResponseData> => {
-  data.permissionId = new Types.ObjectId(data.permissionId);
-  data.roleId = new Types.ObjectId(data.roleId);
+// export const checkAccessRoleToPermission = async (
+//   data: Partial<ICheckAccessDto>
+// ): Promise<IResponseData> => {
+//   data.permissionId = new Types.ObjectId(data.permissionId);
+//   data.roleId = new Types.ObjectId(data.roleId);
 
-  const permissionExists = await permissionRepo.findOne({
-    _id: data.permissionId,
-  });
+//   const permissionExists = await permissionRepo.findOne({
+//     _id: data.permissionId,
+//   });
 
-  if (!permissionExists) {
-    return {
-      statusCode: httpStatus.NOT_FOUND,
-      message: "مجوز پیدا نشد",
-    };
-  }
+//   if (!permissionExists) {
+//     return {
+//       statusCode: httpStatus.NOT_FOUND,
+//       message: "مجوز پیدا نشد",
+//     };
+//   }
 
-  const roleExists = await roleRepo.findOne({ _id: data.roleId });
+//   const roleExists = await roleRepo.findOne({ _id: data.roleId });
 
-  if (!roleExists) {
-    return {
-      statusCode: httpStatus.NOT_FOUND,
-      message: "نقش پیدا نشد",
-    };
-  }
+//   if (!roleExists) {
+//     return {
+//       statusCode: httpStatus.NOT_FOUND,
+//       message: "نقش پیدا نشد",
+//     };
+//   }
 
-  const roleHasThisPermission = permissionExists.roles?.some(
-    (role) => role._id?.toString() === data.roleId?.toString()
-  );
+//   const roleHasThisPermission = permissionExists.roles?.some(
+//     (role) => role._id?.toString() === data.roleId?.toString()
+//   );
 
-  if (!roleHasThisPermission) {
-    return {
-      message: "این نقش به این مجوز دسترسی ندارد",
-      data: { access: false },
-    };
-  }
+//   if (!roleHasThisPermission) {
+//     return {
+//       message: "این نقش به این مجوز دسترسی ندارد",
+//       data: { access: false },
+//     };
+//   }
 
-  return {
-    message: "این نقش به این مجوز دسترسی دارد",
-    data: { access: true },
-  };
-};
+//   return {
+//     message: "این نقش به این مجوز دسترسی دارد",
+//     data: { access: true },
+//   };
+// };

@@ -1,29 +1,23 @@
 import { Router } from "express";
+import { DataValidator } from "../shared/middlewares/data-validator.middleware";
+import { ResponseFormatter } from "../shared/middlewares/response-formatter.middelware";
+import { CreatePermissionDto } from "./dto/request/create-permission.dto";
+import { ParamIdDto } from "../shared/dtos/requests/param-id.dto";
+import { Authentication } from "../shared/middlewares/authentication.middleware";
+import { Authorization } from "../shared/middlewares/authorization.middleware";
+import { permissionPermissionsEnum } from "../seeder/enums/permission-permissions.enum";
 import {
   addRoleToPermission,
-  checkAccessRoleToPermission,
   createPermission,
   deleteOnePermission,
   findAllPermissions,
   findOnePermission,
-  hardDeleteOnePermission,
   removeRoleFromPermission,
   updateOnePermission,
 } from "./permission.service";
-import { DataValidator } from "../shared/middlewares/data-validator.middleware";
-import { ResponseFormatter } from "../shared/middlewares/response-formatter.middelware";
-import { CreatePermissionDto } from "./dto/create-permission.dto";
-import { FindOnePermissionDto } from "./dto/find-one-permission.dto";
-import { FindPermissionsListDto } from "./dto/find-permissions-list.dto";
-import { UpdatePermissionDto } from "./dto/update-permission.dto";
-import { DeletePermissionDto } from "./dto/delete-permission.dto";
-import { AddRoleToPermissionDto } from "./dto/add-role.dto";
-import { RemoveRoleFromPermissionDto } from "./dto/remvoe-role.dto";
-import { ParamIdDto } from "../shared/dtos/requests/param-id.dto";
-import { CheckAccessDto } from "./dto/request/check-access.dto";
-import { Authentication } from "../shared/middlewares/authentication.middleware";
-import { Authorization } from "../shared/middlewares/authorization.middleware";
-import { permissionPermissionsEnum } from "../seeder/enums/permission-permissions.enum";
+import { ListPermissionDto } from "./dto/request/list-permission.dto";
+import { UpdatePermissionDto } from "./dto/request/update-permission.dto";
+import { addRoleToPermissionDto } from "./dto/request/add-role-to-permission.dto";
 
 const router = Router();
 
@@ -42,7 +36,7 @@ router.get(
   "/list",
   Authentication,
   Authorization(permissionPermissionsEnum.LIST),
-  FindPermissionsListDto,
+  ListPermissionDto,
   DataValidator,
   ResponseFormatter(findAllPermissions)
 );
@@ -77,22 +71,22 @@ router.delete(
   ResponseFormatter(deleteOnePermission)
 );
 
-// Hard delete permission
-router.delete(
-  "/delete/hard/:id",
-  Authentication,
-  Authorization(permissionPermissionsEnum.HARD_DELETE),
-  ParamIdDto,
-  DataValidator,
-  ResponseFormatter(hardDeleteOnePermission)
-);
+// // Hard delete permission
+// router.delete(
+//   "/delete/hard/:id",
+//   Authentication,
+//   Authorization(permissionPermissionsEnum.HARD_DELETE),
+//   ParamIdDto,
+//   DataValidator,
+//   ResponseFormatter(hardDeleteOnePermission)
+// );
 
 // add new role to permission
 router.post(
   "/addRole",
   Authentication,
   Authorization(permissionPermissionsEnum.ADD_ROLE),
-  AddRoleToPermissionDto,
+  addRoleToPermissionDto,
   DataValidator,
   ResponseFormatter(addRoleToPermission)
 );
@@ -102,19 +96,19 @@ router.delete(
   "/removeRole",
   Authentication,
   Authorization(permissionPermissionsEnum.REMOVE_ROLE),
-  RemoveRoleFromPermissionDto,
+  addRoleToPermissionDto,
   DataValidator,
   ResponseFormatter(removeRoleFromPermission)
 );
 
-// check access specific role to permission
-router.get(
-  "/access-check",
-  Authentication,
-  Authorization(permissionPermissionsEnum.ACCESS_CHECK),
-  CheckAccessDto,
-  DataValidator,
-  ResponseFormatter(checkAccessRoleToPermission)
-);
+// // check access specific role to permission
+// router.get(
+//   "/access-check",
+//   Authentication,
+//   Authorization(permissionPermissionsEnum.ACCESS_CHECK),
+//   CheckAccessDto,
+//   DataValidator,
+//   ResponseFormatter(checkAccessRoleToPermission)
+// );
 
 export default router;

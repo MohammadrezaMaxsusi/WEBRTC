@@ -6,8 +6,8 @@ import {
   deleteOneRole,
   findAllRoles,
   findOneRole,
-  getPermissions,
-  hardDeleteOneRole,
+  // getPermissions,
+  // hardDeleteOneRole,
   updateOneRole,
 } from "./role.service";
 import { FindRolesListDto } from "./dto/find-roles-list.dto";
@@ -70,24 +70,24 @@ router.delete(
   ResponseFormatter(deleteOneRole)
 );
 
-// Hard Delete specific role
-router.delete(
-  "/delete/hard/:id",
-  Authentication,
-  Authorization(rolePermissionsEnum.HARD_DELETE),
-  ParamIdDto,
-  DataValidator,
-  ResponseFormatter(hardDeleteOneRole)
-);
+// // Hard Delete specific role
+// router.delete(
+//   "/delete/hard/:id",
+//   Authentication,
+//   Authorization(rolePermissionsEnum.HARD_DELETE),
+//   ParamIdDto,
+//   DataValidator,
+//   ResponseFormatter(hardDeleteOneRole)
+// );
 
-// Get role permissions
-router.get(
-  "/get-permissions/:id",
-  Authentication,
-  Authorization(rolePermissionsEnum.GET_PERMISSIONS),
-  ParamIdDto,
-  DataValidator,
-  ResponseFormatter(getPermissions)
-);
+// // Get role permissions
+// router.get(
+//   "/get-permissions/:id",
+//   Authentication,
+//   Authorization(rolePermissionsEnum.GET_PERMISSIONS),
+//   ParamIdDto,
+//   DataValidator,
+//   ResponseFormatter(getPermissions)
+// );
 
 export default router;
